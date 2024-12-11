@@ -25,14 +25,14 @@ router.post("/admin/create-user", authenticate, async (req: AuthenticatedRequest
     return;
   }
 
-  const { username, email, password, role } = req.body;
+  const { name, email, password, role } = req.body;
 
   try {
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
-      username,
+      name,
       email,
       password: hashedPassword,
       role,

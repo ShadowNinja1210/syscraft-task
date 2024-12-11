@@ -61,6 +61,31 @@ router.post("/movie", async (req, res) => {
   }
 });
 
+router.delete("/movie/:id", async (req, res) => {
+  try {
+    const params = req.params;
+    const { id } = params;
+
+    const deletedMovie = Movie.findByIdAndDelete(id);
+
+    if (!deletedMovie) {
+      res.json({
+        message: "Movie not found",
+        status: 404,
+      });
+      return;
+    }
+
+    res.json({
+      message: "Deleted movie",
+      movie: deletedMovie,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting movie", error: error });
+    return;
+  }
+});
+
 router.put("/movie-like/:id", async (req, res) => {
   try {
     const params = req.params;

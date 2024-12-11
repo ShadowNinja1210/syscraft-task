@@ -3,9 +3,22 @@ import dotenv from "dotenv";
 import authRoutes from "./authRoutes";
 import apiRoutes from "./apiRoutes";
 import { connectDb } from "./lib/utils";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
+
+// Allow all origins (not recommended for production)
+app.use(cors());
+
+// Or configure specific origins
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Replace with your Vite frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+    credentials: true, // Include cookies and credentials
+  })
+);
 
 app.use(express.json()); // Parse JSON request bodies
 

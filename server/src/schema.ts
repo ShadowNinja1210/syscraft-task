@@ -13,7 +13,7 @@ export interface IUser {
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["Admin", "User"], required: true },
@@ -36,6 +36,7 @@ export interface IMovie {
   releaseDate: Date;
   genre: string;
   likes: number;
+  likedBy: mongoose.Types.ObjectId[];
   comments: { userId: mongoose.Types.ObjectId; comment: string }[];
   ratings: { userId: mongoose.Types.ObjectId; rating: number }[];
   createdAt: Date;
@@ -49,6 +50,7 @@ const movieSchema = new mongoose.Schema(
     releaseDate: { type: Date, required: true },
     genre: { type: String, required: true },
     likes: { type: Number, default: 0 },
+    likedBy: { type: [mongoose.Types.ObjectId], default: [] },
     comments: { type: [{ userId: mongoose.Types.ObjectId, comment: String }], default: [] },
     ratings: { type: [{ userId: mongoose.Types.ObjectId, rating: Number }], default: [] },
   },
